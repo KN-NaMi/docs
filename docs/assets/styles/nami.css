@@ -1,0 +1,88 @@
+
+/* Jasny tryb (default) */
+:root > * {
+    /* Primary: granat NaMi */
+    --md-primary-fg-color: #081f3e;
+    --md-primary-fg-color--light: #264a7a;
+    --md-primary-fg-color--dark: #040f1f;
+  
+    
+    --md-accent-fg-color: #081f3e;
+
+  
+    /* Tło bazowe */
+    --md-default-bg-color: #f9fafb;
+  
+    
+    --md-default-fg-color: #0c0c0c;          
+    --md-default-fg-color--light: #081f3e;   
+    --md-default-fg-color--dark: #020617;
+  
+    /* Główny kolor tekstu w treści */
+    --md-typeset-color: var(--md-default-fg-color);
+  }
+  
+  /* Ciemny tryb – zachowujemy branding, ale tekst jest biały */
+  [data-md-color-scheme="slate"] {
+    --md-primary-fg-color: #081f3e;
+    --md-primary-fg-color--light: #4a658a;
+    --md-primary-fg-color--dark: #020814;
+  
+    --md-accent-fg-color: #ff8a00;
+    --md-accent-fg-color--light: #ffb74d;
+    --md-accent-fg-color--dark: #ef6c00;
+  
+    /* Ciemne tło */
+    --md-default-bg-color: #020814;
+  
+    /* Tekst jasny/biały */
+    --md-default-fg-color: #ffffff;
+    --md-default-fg-color--light: #e5e7eb;
+    --md-default-fg-color--dark: #9ca3af;
+  
+    --md-typeset-color: var(--md-default-fg-color);
+  }
+  
+  /* Logo – rozmiar */
+  .md-header__button.md-logo img {
+    height: 32px;
+  }
+  
+  /* W trybie ciemnym delikatnie rozjaśniamy logo przez invert,
+     dopóki nie podmienisz na wersję jasną SVG */
+  [data-md-color-scheme="slate"] .md-header__button.md-logo img {
+    filter: invert(1);
+  }
+  
+
+/* Minimalistyczne linki do social media */
+.md-typeset a.social-link {
+    font-weight: 500;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    padding-bottom: 0.05rem;
+    margin-right: 1.5rem;
+    white-space: nowrap;
+  }
+  
+  .md-typeset a.social-link:last-of-type {
+    margin-right: 0;
+  }
+  
+  .md-typeset a.social-link:hover {
+    border-bottom-color: var(--md-accent-fg-color);
+  }
+  
+
+
+/* Social buttons */
+
+.md-typeset a.social-button {
+  margin-right: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.md-typeset a.social-button svg {
+  vertical-align: middle;
+  margin-right: 0.35rem;
+}
