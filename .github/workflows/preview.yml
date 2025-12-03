@@ -1,0 +1,68 @@
+name: Preview Docs for Pull Requests
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+  pull-requests: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    outputs:
+      pr_path: ${{ steps.vars.outputs.pr_path }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          pip install mkdocs-material
+          pip install -r requirements.txt || true
+
+      - name: Determine PR preview path
+        id: vars
+        run: |
+          echo "pr_path=pr-${{ github.event.pull_request.number }}" >> $GITHUB_OUTPUT
+
+      - name: Build MkDocs
+        run: mkdocs build --clean --site-dir site
+
+      - name: Move site into PR folder
+        run: |
+          mkdir -p _site/${{ steps.vars.outputs.pr_path }}
+          mv site/* _site/${{ steps.vars.outputs.pr_path }}/
+
+      - name: Upload GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+      - name: Comment PR with preview URL
+        uses: peter-evans/create-or-update-comment@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            **Documentation Preview**
+
+            **${{ steps.deployment.outputs.page_url }}${{ needs.build.outputs.pr_path }}/**
