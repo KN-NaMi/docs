@@ -1,3 +1,71 @@
-site_name: My Docs
+site_name: KN NaMi
+site_url: https://kn-nami.github.io/docs/pr-1/  # ustawisz później
+
 theme:
   name: material
+  language: pl
+  logo: assets/images/logo_white.svg
+  favicon: assets/images/logo_white.svg  # opcjonalnie, możesz usunąć
+  palette:
+    # Jasny tryb
+    #- media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: custom     # używamy własnych kolorów z CSS
+      accent: custom
+      #toggle:
+        #icon: material/weather-night
+        #name: Przełącz na tryb ciemny
+
+    # Ciemny tryb
+    #- media: "(prefers-color-scheme: light)"
+    #  scheme: slate
+    #  primary: custom
+    #  accent: custom
+    #  toggle:
+    #    icon: material/weather-sunny
+    #    name: Przełącz na tryb jasny
+
+  features:
+    - navigation.top
+    - navigation.footer
+    - navigation.indexes
+    - toc.integrate
+    - toc.follow
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+
+nav:
+  - Strona główna: index.md
+  - Projekty:
+      - Choinka PCB: projekty/choinka/instrukcja.md
+
+plugins:
+  - search
+
+markdown_extensions:
+  - admonition
+  - footnotes
+  - toc:
+      permalink: true
+  - pymdownx.superfences
+  - pymdownx.details
+  - pymdownx.highlight
+  - pymdownx.emoji
+  - pymdownx.tabbed:
+      alternate_style: true
+  - attr_list 
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/KN-NaMi
+    - icon: fontawesome/brands/instagram
+      link: https://www.instagram.com/nami.pwr/
+    - icon: fontawesome/brands/linkedin
+      link: https://www.linkedin.com/company/kn-nami/
+extra_css:
+  - assets/styles/nami.css
