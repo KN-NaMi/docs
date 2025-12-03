@@ -8,11 +8,14 @@ permissions:
   contents: read
   pages: write
   id-token: write
-  pull-requests: write 
+  pull-requests: write
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    outputs:
+      pr_path: ${{ steps.vars.outputs.pr_path }}
 
     steps:
       - uses: actions/checkout@v4
@@ -35,7 +38,7 @@ jobs:
       - name: Build MkDocs
         run: mkdocs build --clean --site-dir site
 
-      - name: Move site into PR-specific folder
+      - name: Move site into PR folder
         run: |
           mkdir -p _site/${{ steps.vars.outputs.pr_path }}
           mv site/* _site/${{ steps.vars.outputs.pr_path }}/
@@ -60,10 +63,6 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           issue-number: ${{ github.event.pull_request.number }}
           body: |
-            📘 **Documentation Preview**
+            **Documentation Preview**
 
-            Your docs preview is available at:
-
-            👉 **${{ steps.deployment.outputs.page_url }}${{ steps.vars.outputs.pr_path }}/**
-
-            _This preview updates automatically on each commit._
+            **${{ steps.deployment.outputs.page_url }}${{ needs.build.outputs.pr_path }}/**
