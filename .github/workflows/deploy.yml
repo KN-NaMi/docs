@@ -24,5 +24,5 @@ jobs:
 
       - name: Deploy locally on VPS
         run: |
-          sudo rm -rf /var/website/docs/*
-          sudo cp -r site/* /var/website/docs/
+          rm -rf /var/website/docs/*
+          cp -r site/* /var/website/docs/
