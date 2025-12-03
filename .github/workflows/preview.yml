@@ -1,0 +1,52 @@
+name: Preview Docs for Pull Requests
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install mkdocs-material
+          pip install -r requirements.txt || true
+
+      - name: Determine PR path
+        id: vars
+        run: echo "path=pr-${{ github.event.pull_request.number }}" >> $GITHUB_OUTPUT
+
+      - name: Build MkDocs site
+        run: mkdocs build --site-dir site
+
+      - name: Move site to PR-specific path
+        run: |
+          mkdir -p _site/${{ steps.vars.outputs.path }}
+          mv site/* _site/${{ steps.vars.outputs.path }}/
+
+      - name: Upload artifact for Pages
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
