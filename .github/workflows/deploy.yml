@@ -1,0 +1,28 @@
+name: Build MkDocs
+
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  build:
+    runs-on: [self-hosted, linux]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        run: |
+          python3 -m venv .venv
+          source .venv/bin/activate
+          pip install -r requirements.txt
+
+      - name: Build MkDocs
+        run: |
+          source .venv/bin/activate
+          mkdocs build --clean
+
+      - name: Deploy locally on VPS
+        run: |
+          sudo rm -rf /var/website/docs/*
+          sudo cp -r site/* /var/website/docs/
