@@ -1,4 +1,3 @@
-/* Kolory marki NaMi + zachowanie w jasnym/ciemnym motywie */
 
 /* Jasny tryb (default) */
 :root > * {
@@ -7,16 +6,16 @@
     --md-primary-fg-color--light: #264a7a;
     --md-primary-fg-color--dark: #040f1f;
   
-    /* Accent: pomarańcz (kontrast do granatu) */
+    
     --md-accent-fg-color: #081f3e;
 
   
     /* Tło bazowe */
     --md-default-bg-color: #f9fafb;
   
-    /* Kolory tekstu – profesjonalny, ciemny */
-    --md-default-fg-color: #0c0c0c;          /* prawie czarny */
-    --md-default-fg-color--light: #081f3e;   /* jaśniejszy tekst pomocniczy */
+    
+    --md-default-fg-color: #0c0c0c;          
+    --md-default-fg-color--light: #081f3e;   
     --md-default-fg-color--dark: #020617;
   
     /* Główny kolor tekstu w treści */
@@ -55,8 +54,6 @@
     filter: invert(1);
   }
   
-
-
 
 /* Minimalistyczne linki do social media */
 .md-typeset a.social-link {
